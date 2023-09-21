@@ -1,23 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Nav from "./components/Nav";
+import { Routes, Route } from "react-router-dom";
+import User from "./pages/User";
+import AddUser from "./pages/AddUser";
 
 function App() {
+  const [users, setUsers] = useState([]);
+  async function getAllUsers() {
+    try {
+      const response = await axios.get(
+        "https://first-site-3a9d7-default-rtdb.firebaseio.com/users.json"
+      );
+      const { data } = response;
+
+      const keyArray = Object.keys(data);
+
+      const dataArray = keyArray.map((key) => ({
+        id: key,
+        ...data[key],
+      }));
+
+      setUsers(dataArray);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+  console.log(users);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Nav />
+      <Routes>
+        <Route path="/" element={<User users={users} />} />
+        <Route path="/add-user" element={<AddUser />} />
+      </Routes>
     </div>
   );
 }
