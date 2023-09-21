@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Nav from "./components/Nav";
 import { Routes, Route } from "react-router-dom";
-import User from "./pages/User";
-import AddUser from "./pages/AddUser";
+import Products from "./pages/Products";
+import AddProduct from "./pages/AddProduct";
+import Footer from "./components/Footer";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -34,9 +35,10 @@ function App() {
     <div>
       <Nav />
       <Routes>
-        <Route path="/" element={<User users={users} />} />
-        <Route path="/add-user" element={<AddUser />} />
+        <Route path="/" element={<Products users={users} />} />
+        <Route path="/add-product" element={<AddProduct />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
