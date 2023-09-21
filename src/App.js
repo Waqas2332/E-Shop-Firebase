@@ -32,14 +32,14 @@ function App() {
   }, []);
   console.log(users);
   return (
-    <div>
+    <>
       <Nav />
       <Routes>
         <Route path="/" element={<Products users={users} />} />
         <Route path="/add-product" element={<AddProduct />} />
       </Routes>
       <Footer />
-    </div>
+    </>
   );
 }
 
