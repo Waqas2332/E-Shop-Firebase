@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProductForm = () => {
   const [productTitle, setProductTitle] = useState("");
@@ -6,10 +8,27 @@ const ProductForm = () => {
   const [ratings, setRatings] = useState("");
   const [category, setCategory] = useState("");
   const [image, setImage] = useState("");
+  const navigate = useNavigate();
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    // TODO: Handle form submission, e.g., send data to server
+    const product = {
+      productTitle,
+      price,
+      ratings,
+      category,
+      image,
+    };
+    try {
+      const response = await axios.post(
+        "https://first-site-3a9d7-default-rtdb.firebaseio.com/products.json",
+        product
+      );
+      console.log(response);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
